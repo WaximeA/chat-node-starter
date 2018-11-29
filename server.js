@@ -21,7 +21,7 @@ io.sockets.on('connection', (socket) => {
       message: message
     };
     socket.emit('new_message', params);
-    socket.boradcast.emit('new_message', params);
+    socket.broadcast.emit('new_message', params);
   });
 });
 
