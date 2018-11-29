@@ -12,10 +12,6 @@ socket.on('new_user', (name) => {
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   if (form.elements['message'].value  !== '' && form.elements['message'].value !== '' ){
-
-    // console.log(form.elements['message'].value);
-
-    // Envoi des valeurs au client via un event emit
     socket.emit('message', form.elements['message'].value);
   }
 });
