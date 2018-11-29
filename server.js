@@ -10,9 +10,15 @@ app.get('/', function (){
 });
 
 io.sockets.on('connection', (socket) => {
+  // envoi le name au client via l'event "new_user"
   socket.on('new_user', (name) => {
     console.log(name);
-  })
+
+    // renvoi à l'utilisateur courant
+    socket.emit('new_user', name);
+    // renvoi à tous les "clients" sauf le courant
+    socket.broadcast.emit('new_user', name);
+  });
 });
 
 server.listen(8080);
