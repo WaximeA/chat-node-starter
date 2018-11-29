@@ -19,9 +19,9 @@ form.addEventListener('submit', (e) => {
 });
 
 socket.on('chat_init', (CHAT) => {
-  chat.innerHTML = CHAT.map(function(msg) {
-    return `<p>${msg.username} : ${msg.message}</p>`
-  });
+    chat.innerHTML = CHAT.map(function(msg) {
+      return `<p>${msg.username} : ${msg.message}</p>`
+    });
 });
 
 socket.on('new_message', (params) => {

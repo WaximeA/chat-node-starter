@@ -3,7 +3,7 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
 
-let CHAT = [];
+let CHAT = {};
 
 app.use(express.static(__dirname));
 app.get('/', function (){
@@ -16,7 +16,7 @@ io.sockets.on('connection', (socket) => {
     socket.room = params.room;
 
     socket.join(params.room);
-    socket.emit('chat_init', CHAT);
+    socket.emit('chat_init', CHAT[socket.room] || []);
     socket.to(socket.room).emit('new_user', params.username);
   });
 
@@ -25,7 +25,12 @@ io.sockets.on('connection', (socket) => {
       username: socket.username,
       message: message
     };
-    CHAT.push(params);
+
+    if (CHAT[socket.room] === undefined){
+      CHAT[socket.room] = [];
+    }
+
+    CHAT[socket.room].push(params);
     socket.emit('new_message', params);
     socket.to(socket.room).emit('new_message', params);
   });
