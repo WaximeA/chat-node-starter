@@ -10,14 +10,18 @@ app.get('/', function (){
 
 io.sockets.on('connection', (socket) => {
   socket.on('new_user', (name) => {
-
+    socket.username = name;
     socket.emit('new_user', name);
     socket.broadcast.emit('new_user', name);
   });
 
   socket.on('message', (message) => {
-    socket.emit('new_message', message);
-    socket.broadcast.emit('new_message', message);
+    const params = {
+      username: socket.username,
+      message: message
+    };
+    socket.emit('new_message', params);
+    socket.boradcast.emit('new_message', params);
   });
 });
 
