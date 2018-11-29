@@ -17,5 +17,5 @@ form.addEventListener('submit', (e) => {
 });
 
 socket.on('new_message', (params) => {
-  chat.innerHTML += `${params.username} : ${params.message}`;
+  chat.innerHTML += `<p>${params.username} : ${params.message}</p>`;
 });
