@@ -17,7 +17,7 @@ io.sockets.on('connection', (socket) => {
 
     socket.join(params.room);
     socket.emit('chat_init', CHAT[socket.room] || []);
-    socket.to(socket.room).emit('new_user', params.username);
+    socket.emit('new_user', params.username);
   });
 
   socket.on('message', (message) => {

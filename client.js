@@ -9,7 +9,7 @@ const room = prompt('What is your room ?');
 socket.emit('new_user', {username, room});
 
 socket.on('new_user', (name) => {
-  // alert(name);
+  chat.innerHTML += `<hr><h5>Hello <b>${name}</b> start to chat here :</h5>`;
 });
 
 form.addEventListener('submit', (e) => {
@@ -23,7 +23,7 @@ form.addEventListener('submit', (e) => {
 socket.on('chat_init', (CHAT) => {
     chat.innerHTML = CHAT.map(function(msg) {
       return `<p>${msg.username} : ${msg.message}</p>`
-    });
+    }).join('');
 });
 
 socket.on('new_message', (params) => {
