@@ -6,10 +6,17 @@ const messageInput = document.getElementById('message-field');
 const username = prompt('What is your username ?');
 const room = prompt('What is your room ?');
 
-socket.emit('new_user', {username, room});
+const COLORS = [
+  '#e21400', '#91580f', '#f8a700', '#f78b00',
+  '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
+  '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
+];
+let randColor = COLORS[Math.floor(Math.random() * COLORS.length)];
 
-socket.on('new_user', (name) => {
-  chat.innerHTML += `<hr><h5>Hello <b>${name}</b> start to chat here :</h5>`;
+socket.emit('new_user', {username, room, randColor});
+
+socket.on('new_user', (params) => {
+  chat.innerHTML += `<hr><h5>Hello <b style="color: ${params.randColor}">${params.username}</b> start to chat here :</h5>`;
 });
 
 form.addEventListener('submit', (e) => {
@@ -22,10 +29,10 @@ form.addEventListener('submit', (e) => {
 
 socket.on('chat_init', (CHAT) => {
     chat.innerHTML = CHAT.map(function(msg) {
-      return `<p>${msg.username} : ${msg.message}</p>`
+      return `<p><b style="color: ${msg.randColor}">${msg.username}</b> : ${msg.message}</p>`
     }).join('');
 });
 
 socket.on('new_message', (params) => {
-  chat.innerHTML += `<p>${params.username} : ${params.message}</p>`;
+  chat.innerHTML += `<p><b style="color: ${params.randColor}">${params.username}</b> : ${params.message}</p>`;
 });

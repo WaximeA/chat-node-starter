@@ -14,16 +14,18 @@ io.sockets.on('connection', (socket) => {
   socket.on('new_user', (params) => {
     socket.username = params.username;
     socket.room = params.room;
+    socket.randColor = params.randColor;
 
     socket.join(params.room);
     socket.emit('chat_init', CHAT[socket.room] || []);
-    socket.emit('new_user', params.username);
+    socket.emit('new_user', params);
   });
 
   socket.on('message', (message) => {
     const params = {
       username: socket.username,
-      message: message
+      message: message,
+      randColor: socket.randColor
     };
 
     if (CHAT[socket.room] === undefined){
