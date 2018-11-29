@@ -12,7 +12,7 @@ app.get('/', function (){
 io.sockets.on('connection', (socket) => {
   // envoi le name au client via l'event "new_user"
   socket.on('new_user', (name) => {
-    console.log(name);
+    // console.log(name);
 
     // renvoi à l'utilisateur courant
     socket.emit('new_user', name);
