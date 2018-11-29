@@ -9,10 +9,13 @@ app.get('/', function (){
 });
 
 io.sockets.on('connection', (socket) => {
-  socket.on('new_user', (name) => {
-    socket.username = name;
-    socket.emit('new_user', name);
-    socket.broadcast.emit('new_user', name);
+  socket.on('new_user', (params) => {
+    socket.username = params.username;
+    socket.room = params.room;
+
+    socket.join(params.room);
+    socket.emit('new_user', params.username);
+    socket.to(socket.room).emit('new_user', params.username);
   });
 
   socket.on('message', (message) => {
@@ -21,7 +24,7 @@ io.sockets.on('connection', (socket) => {
       message: message
     };
     socket.emit('new_message', params);
-    socket.broadcast.emit('new_message', params);
+    socket.to(socket.room).emit('new_message', params);
   });
 });
 

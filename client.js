@@ -3,7 +3,9 @@ const form = document.forms[0];
 const chat = document.getElementById('chat');
 
 const username = prompt('What is your username ?');
-socket.emit('new_user', username);
+const room = prompt('What is your room ?');
+
+socket.emit('new_user', {username, room});
 
 socket.on('new_user', (name) => {
   // alert(name);
