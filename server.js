@@ -19,6 +19,11 @@ io.sockets.on('connection', (socket) => {
     // renvoi à tous les "clients" sauf le courant
     socket.broadcast.emit('new_user', name);
   });
+
+  socket.on('message', (message) => {
+    socket.emit('new_message', message);
+    socket.broadcast.emit('new_message', message);
+  });
 });
 
 server.listen(8080);
