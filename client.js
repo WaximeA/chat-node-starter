@@ -1,6 +1,7 @@
 const socket = io.connect('http://localhost:8080');
 const form = document.forms[0];
 const chat = document.getElementById('chat');
+const messageInput = document.getElementById('message-field');
 
 const username = prompt('What is your username ?');
 const room = prompt('What is your room ?');
@@ -16,6 +17,7 @@ form.addEventListener('submit', (e) => {
   if (form.elements['message'].value  !== '' && form.elements['message'].value !== '' ){
     socket.emit('message', form.elements['message'].value);
   }
+  messageInput.value = '';
 });
 
 socket.on('chat_init', (CHAT) => {
